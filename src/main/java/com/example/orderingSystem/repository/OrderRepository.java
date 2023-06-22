@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.orderingSystem.model.entity.OrderEntity;
-import com.example.orderingSystem.model.pojo.OrderDao;
 
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {

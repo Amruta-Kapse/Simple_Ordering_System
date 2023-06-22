@@ -32,8 +32,8 @@ public class OrderController {
         return new ResponseEntity<>(orderService.updateOrder(order, orderId).get(), HttpStatusCode.valueOf(200));
     }
 
-    @GetMapping("/getAllOrders/{id}")
-    public Optional<List<OrderDao>> getAllOrdersById(@PathVariable("id") Long customerId) {
+    @GetMapping("/getAllOrders")
+    public Optional<List<OrderDao>> getAllOrdersById(@RequestParam Long customerId) {
         Optional<List<OrderDao>> list = orderService.getAllOrdersByCustomerId(customerId);
         return Optional.of(list.orElseThrow(() -> new OrderException("Order list is empty.")));
     }

@@ -3,7 +3,6 @@ package com.example.orderingSystem.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.example.orderingSystem.mapper.CustomerMapper;
 import com.example.orderingSystem.model.pojo.ItemDao;
@@ -13,7 +12,6 @@ import com.example.orderingSystem.mapper.OrderMapper;
 import com.example.orderingSystem.model.entity.OrderEntity;
 import com.example.orderingSystem.model.pojo.OrderDao;
 import com.example.orderingSystem.repository.OrderRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
