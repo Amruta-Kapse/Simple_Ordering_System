@@ -12,13 +12,8 @@ import com.example.orderingSystem.model.pojo.OrderDao;
 
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
-
-
-    //public List<OrderDao> FindAllOrdersByCustomerId(@Param("customerId") Long customerId);
-
-    //@Query(value = "select count(id) from Order_Info where customerId=customerId",nativeQuery = true)
     int countAllByCustomerId_Id(@Param("customerId") Long customerId);
 
-   @Query(value = "SELECT  * FROM Order_Info where customer_id_id=customer_id" , nativeQuery = true)
+    @Query(value = "SELECT  * FROM Order_Info where customer_id_id=customer_id", nativeQuery = true)
     List<OrderEntity> findAllByCustomerId_Id(@Param("customer_id") Long customerId);
 }
