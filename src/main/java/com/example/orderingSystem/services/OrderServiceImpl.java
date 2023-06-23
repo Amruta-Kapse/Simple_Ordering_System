@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.orderingSystem.mapper.CustomerMapper;
+import com.example.orderingSystem.model.entity.CustomerEntity;
 import com.example.orderingSystem.model.pojo.ItemDao;
 import com.example.orderingSystem.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,25 +24,27 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerMapper customerMapper;
 
     @Override
-    public Optional<OrderDao> placeOrder(OrderDao order) {
-        order.setOrderAmount(calculateDiscountPrice(order));
+    public Optional<OrderDao> placeOrder(OrderDao order, Long customerId) {
+        order.setOrderAmount(calculateDiscountPrice(order,customerId));
         OrderEntity orderEntity = orderMapper.mapOrderToOrderEntity(order);
+        CustomerEntity customerEntity=customerRepo.findById(customerId).get();
+        orderEntity.setCustomer(customerEntity);
         orderEntity = orderRepo.save(orderEntity);
         return Optional.ofNullable(orderMapper.mapOrderEntityToOrderDao(orderEntity));
     }
 
     @Override
-    public Optional<OrderDao> updateOrder(OrderDao order, Long orderId) {
+    public Optional<OrderDao> updateOrder(OrderDao order, Long orderId, Long customerId) {
         OrderEntity orderEntity;
         if (orderRepo.existsById(orderId)) {
             orderEntity = orderRepo.findById(orderId).get();
-            order.setOrderAmount(calculateDiscountPrice(order));
+            order.setOrderAmount(calculateDiscountPrice(order,customerId));
             orderMapper.mapOrderToOrderEntity(order);
             orderEntity.setId(orderId);
             orderRepo.save(orderEntity);
             return Optional.ofNullable(orderMapper.mapOrderEntityToOrderDao(orderEntity));
         }
-        order.setOrderAmount(calculateDiscountPrice(order));
+        order.setOrderAmount(calculateDiscountPrice(order,customerId));
         orderEntity = orderMapper.mapOrderToOrderEntity(order);
         orderEntity = orderRepo.save(orderEntity);
         return Optional.ofNullable(orderMapper.mapOrderEntityToOrderDao(orderEntity));
@@ -59,8 +62,8 @@ public class OrderServiceImpl implements OrderService {
         orderRepo.delete(orderEntity);
     }
 
-    public Double calculateDiscountPrice(OrderDao order) {
-        int orderCount = orderRepo.countAllByCustomerId_Id(order.getCustomerId().getId());
+    public Double calculateDiscountPrice(OrderDao order,Long customerId) {
+        int orderCount = orderRepo.countAllByCustomerId_Id(customerId);
         List<ItemDao> items = order.getItems();
         double amount = items.stream().map(item -> item.getItem_Price()).reduce(0.0, (a, b) -> a + b).doubleValue();
         Double discount = 0.0;

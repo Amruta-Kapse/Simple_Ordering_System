@@ -10,12 +10,12 @@ import com.example.orderingSystem.model.pojo.OrderDao;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderMapper {
-
+    @Mapping(target = "customer", source = "customerId")
     OrderEntity mapOrderToOrderEntity(OrderDao order);
-    @Mapping(target = "Id",source = "id")
+
+    @Mapping(target = "Id", source = "id")
+    @Mapping(target = "customerId", source = "customer")
     OrderDao mapOrderEntityToOrderDao(OrderEntity orderEntity);
-
-
 
 
 }

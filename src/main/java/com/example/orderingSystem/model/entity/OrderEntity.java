@@ -3,6 +3,7 @@ package com.example.orderingSystem.model.entity;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,20 +16,20 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderEntity {
 
     @Id
-    @JoinColumn(name = "id", columnDefinition = "long default 100")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST )
-    @PrimaryKeyJoinColumn(name = "customerID", referencedColumnName = "Id")
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private CustomerEntity customer;
 
     @NotNull
-    @OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
-    @Column(name = "Item_id")
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "Id")
     protected List<ItemEntity> items;
 
     @Column(name = "Order_Amount")

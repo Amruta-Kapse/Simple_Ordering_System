@@ -24,22 +24,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Optional<CustomerDao> updateCustomer(CustomerDao customer, Long customerId) {
-       CustomerEntity customerEntity=new CustomerEntity();
-        if (customerRepository.existsById(customerId)) {
-            customerEntity = customerRepository.findById(customerId).get();
-            customerMapper.mapToCustomerEntity(customer);
-            customerEntity.setId(customerId);
-            return Optional.ofNullable(customerMapper.mapToCustomerDao(customerRepository.save(customerEntity)));
-        }
-        customerMapper.mapToCustomerEntity(customer);
-        customerEntity = customerRepository.save(customerEntity);
-        return Optional.ofNullable(customerMapper.mapToCustomerDao(customerEntity));
+        CustomerEntity customerEntity = customerMapper.mapToCustomerEntity(customer);
+        customerEntity.setId(customerId);
+        return Optional.ofNullable(customerMapper.mapToCustomerDao(customerRepository.save(customerEntity)));
     }
 
     @Override
     public void deleteCustomer(Long customerId) {
         if (customerRepository.existsById(customerId)) {
-            CustomerEntity customerEntity=customerRepository.findById(customerId).get();
+            CustomerEntity customerEntity = customerRepository.findById(customerId).get();
             customerRepository.delete(customerEntity);
         }
     }

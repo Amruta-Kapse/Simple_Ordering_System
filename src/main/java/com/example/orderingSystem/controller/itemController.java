@@ -24,7 +24,7 @@ public class itemController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<ItemDao>> getAllItemsByOrderId(@PathVariable("id") Long orderId) {
+    public ResponseEntity<List<ItemDao>> getAllItemsByOrderId(@RequestParam("id") Long orderId) {
         return new ResponseEntity<>(itemService.getAllItemsByOrderId(orderId).get(), HttpStatusCode.valueOf(200));
     }
 

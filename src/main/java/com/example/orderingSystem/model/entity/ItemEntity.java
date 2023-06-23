@@ -3,6 +3,8 @@ package com.example.orderingSystem.model.entity;
 
 
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ItemEntity {
 	
 	@Id
@@ -36,7 +39,6 @@ public class ItemEntity {
 	private Double item_Price;
 	
 	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name="orderId")
 	private OrderEntity order;
 
 }

@@ -46,7 +46,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Optional<List<ItemDao>> getAllItemsByOrderId(Long orderId) {
-        List<ItemEntity> list = itemRepository.findItemEntitiesByorder_Id(orderId);
+        List<ItemEntity> list = itemRepository.findItemEntitiesByOrder_Id(orderId);
         return Optional.of(list.stream().map(item -> mapper.itemEntityMapToItemDao(item)).collect(Collectors.toList()));
     }
 

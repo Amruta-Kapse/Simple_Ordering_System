@@ -23,13 +23,13 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/add")
-    public ResponseEntity<OrderDao> placeOrder(@RequestBody @Valid OrderDao order) {
-        return new ResponseEntity<>(orderService.placeOrder(order).get(), HttpStatusCode.valueOf(201));
+    public ResponseEntity<OrderDao> placeOrder(@RequestBody @Valid OrderDao order,@RequestParam Long customerId) {
+        return new ResponseEntity<>(orderService.placeOrder(order,customerId).get(), HttpStatusCode.valueOf(201));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<OrderDao> updateOrder(@RequestBody @Valid OrderDao order, @PathVariable("id") Long orderId) {
-        return new ResponseEntity<>(orderService.updateOrder(order, orderId).get(), HttpStatusCode.valueOf(200));
+    public ResponseEntity<OrderDao> updateOrder(@RequestBody @Valid OrderDao order, @PathVariable("id") Long orderId,@RequestParam Long customerId) {
+        return new ResponseEntity<>(orderService.updateOrder(order, orderId,customerId).get(), HttpStatusCode.valueOf(200));
     }
 
     @GetMapping("/getAllOrders")

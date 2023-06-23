@@ -32,7 +32,7 @@ public class CustomerController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<CustomerDao> getCustomer(@PathVariable("id") Long customerId) {
-        return new ResponseEntity<>((customerService.getCustomerById(customerId).get()), HttpStatusCode.valueOf(200));
+        return new ResponseEntity<>(customerService.getCustomerById(customerId).get(), HttpStatusCode.valueOf(200));
     }
 
     @DeleteMapping("/remove/{id}")
